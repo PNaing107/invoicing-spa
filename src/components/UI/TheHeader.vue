@@ -8,6 +8,7 @@
             <nav class="flex space-x-4">
                 <StandardDropdown :title="'Sort By'" :options="sortByOptions"></StandardDropdown>
                 <StandardDropdown :title="'Filter By Status'" :options="filterByOptions"></StandardDropdown>
+                <StandardDropdown :title="'Results per Page'" :options="paginationOptions"></StandardDropdown>
                 <StandardButton :title="'New Invoice'"></StandardButton>
             </nav>
         </div>
@@ -27,7 +28,8 @@ export default {
     data() {
         return {
             sortByOptions: ['Invoice Reference', 'Invoice Total', 'Date Created', 'Date Due'],
-            filterByOptions: ['Paid', 'Pending', 'Cancelled', 'Overdue', 'View All']
+            filterByOptions: ['Paid', 'Pending', 'Cancelled', 'Overdue', 'View All'],
+            paginationOptions: [5,10,20,50]
         }
     }
 }
