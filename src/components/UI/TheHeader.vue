@@ -3,7 +3,7 @@
         <div class="flex justify-between w-full">
             <div>
                 <h1 class="text-lg font-bold">Mock Invoicing App</h1>
-                <h2>There are 68 unpaid invoices</h2>
+                <h2>There are {{ unpaid }} unpaid invoices</h2>
             </div>
             <nav class="flex space-x-4">
                 <StandardDropdown :title="'Sort By'" :options="sortByOptions"></StandardDropdown>
@@ -23,6 +23,7 @@ export default {
         StandardDropdown,
         StandardButton
     },
+    props: ['unpaid'],
     data() {
         return {
             sortByOptions: ['Invoice Reference', 'Invoice Total', 'Date Created', 'Date Due'],

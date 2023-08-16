@@ -1,5 +1,5 @@
 <template>
-  <TheHeader></TheHeader>
+  <TheHeader :unpaid="unpaidInvoiceCount"></TheHeader>
   <InvoiceList :invoices="invoices"></InvoiceList>
 </template>
 
@@ -30,6 +30,11 @@ export default {
         this.invoices.error = true;
         this.invoices.data = err;
       })
+  },
+  computed: {
+    unpaidInvoiceCount() {
+      return this.invoices.data.filter(invoice => {return invoice.status == 2}).length;
+    }
   }
 }
 </script>
