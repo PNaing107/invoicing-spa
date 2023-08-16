@@ -25,7 +25,6 @@ export default {
       .then(res => res.json())
       .then(res => {
         this.invoices.data = res.data;
-        // console.log(res.data);
       })
       .catch(err => {
         this.invoices.error = true;

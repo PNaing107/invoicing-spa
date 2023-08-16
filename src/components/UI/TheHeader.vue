@@ -1,6 +1,6 @@
 <template>
     <header class="p-6 border-b-4 border-indigo-400">
-        <div class="flex justify-around w-full">
+        <div class="flex justify-between w-full">
             <div>
                 <h1 class="text-lg font-bold">Mock Invoicing App</h1>
                 <h2>There are 68 unpaid invoices</h2>
