@@ -22,7 +22,17 @@
                     -->
                     <div class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5" :class="{hidden: toggleButtonState}">
                         <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                        <a :key="option" v-for="option in options" value="option" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">{{ option }}</a>
+                        <a
+                          v-for="option in options"
+                          :key="option"
+                          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                          href="#"
+                          role="menuitem"
+                          value="option"
+                          @click="$emit('dropdownSelection',title,option)"
+                        >
+                        {{ option }}
+                        </a>
                         </div>
                     </div>
                 </div>

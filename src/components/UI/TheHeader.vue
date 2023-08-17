@@ -3,7 +3,7 @@
         <div class="flex justify-between w-full">
             <div>
                 <h1 class="text-lg font-bold">Mock Invoicing App</h1>
-                <h2>There are {{ unpaid }} unpaid invoices</h2>
+                <h2>There are {{ unpaidInvoiceCount }} unpaid invoices</h2>
             </div>
             <nav class="flex space-x-4">
                 <StandardDropdown :title="'Sort By'" :options="sortByOptions"></StandardDropdown>
@@ -24,12 +24,17 @@ export default {
         StandardDropdown,
         StandardButton
     },
-    props: ['unpaid'],
+    // props: ['unpaid'],
     data() {
         return {
             sortByOptions: ['Invoice Reference', 'Invoice Total', 'Date Created', 'Date Due'],
             filterByOptions: ['Paid', 'Pending', 'Cancelled', 'Overdue', 'View All'],
             paginationOptions: [5,10,20,50]
+        }
+    },
+    computed: {
+        unpaidInvoiceCount() {
+            return this.$store.getters.unpaidInvoiceCount;
         }
     }
 }

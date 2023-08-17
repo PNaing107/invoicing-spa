@@ -1,6 +1,8 @@
 <template>
-  <TheHeader :unpaid="unpaidInvoiceCount"></TheHeader>
-  <InvoiceList :invoices="invoices"></InvoiceList>
+  <!-- <TheHeader :unpaid="unpaidInvoiceCount"></TheHeader> -->
+  <!-- <InvoiceList :invoices="invoices"></InvoiceList> -->
+  <TheHeader></TheHeader>
+  <InvoiceList></InvoiceList>
 </template>
 
 <script>
@@ -14,28 +16,12 @@ export default {
   },
   data() {
     return {
-      invoices: {
-        error: false,
-        data: []
-      },
+
     }
   },
   created() {
-    fetch('https://invoicing-api.dev.io-academy.uk/invoices')
-      .then(res => res.json())
-      .then(res => {
-        this.invoices.data = res.data;
-      })
-      .catch(err => {
-        this.invoices.error = true;
-        this.invoices.data = err;
-      })
+    this.$store.dispatch('fetchInvoices');
   },
-  computed: {
-    unpaidInvoiceCount() {
-      return this.invoices.data.filter(invoice => {return invoice.status == 2}).length;
-    }
-  }
 }
 </script>
 

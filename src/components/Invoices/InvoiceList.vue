@@ -1,6 +1,6 @@
 <template>
-    <div v-if="invoices.error">The following error has occurred when trying to fetch the invoices:\n {{ invoices.data }}</div>
-    <div v-else v-for="invoice in invoices.data" :key="invoice.id" class="flex justify-between border-2 rounded-md mx-8 my-4 px-1">
+    <div v-if="this.$store.state.invoices.error">The following error has occurred when trying to fetch the invoices:\n {{ invoices.data }}</div>
+    <div v-else v-for="invoice in invoiceSearchResults" :key="invoice.id" class="flex justify-between border-2 rounded-md mx-8 my-4 px-1">
         <div class="flex justify-between items-center space-x-4">
             <p class="font-bold">#{{ invoice.invoice_id }}</p>
             <p>Due {{ formatDate(invoice.due) }}</p>
@@ -21,12 +21,17 @@ import StatusIcon from './StatusIcon.vue';
 
 export default {
     components: { StatusIcon},
-    props: ['invoices'],
+    // props: ['invoices'],
     methods: {
         formatDate(dateString) {
             const date = new Date(dateString);
             const options = { day: "2-digit", month: "long", year: "numeric" };
             return date.toLocaleDateString("en-US", options);  
+        }
+    },
+    computed: {
+        invoiceSearchResults() {
+            return this.$store.getters.invoiceSearchResults;
         }
     }
 }
