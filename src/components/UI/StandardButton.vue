@@ -1,10 +1,10 @@
 <template>
-    <button class="btn-primary">{{ title }}</button>
+    <button :class="type">{{ title }}</button>
 </template>
 
 <script>
     export default {
-        props: ['title']
+        props: ['title','type']
     }
 </script>
 

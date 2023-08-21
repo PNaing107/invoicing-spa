@@ -1,7 +1,7 @@
 <template>
     <div v-if="this.$store.state.invoices.error">The following error has occurred when trying to fetch the invoices:\n {{ invoices.data }}</div>
-    <div v-else-if="! invoiceSearchResults.length" class="text-center">There are no results.</div>
-    <div v-else v-for="invoice in invoiceSearchResults" :key="invoice.id" class="flex justify-between border-2 rounded-md mx-8 my-4 px-1">
+    <div v-else-if="! paginatedResult.length" class="text-center">There are no results.</div>
+    <div v-else v-for="invoice in paginatedResult" :key="invoice.id" class="flex justify-between border-2 rounded-md mx-8 my-4 px-1">
         <div class="flex justify-between items-center space-x-4">
             <p class="font-bold">#{{ invoice.invoice_id }}</p>
             <p>Due {{ formatDate(invoice.due) }}</p>
@@ -31,8 +31,8 @@ export default {
         }
     },
     computed: {
-        invoiceSearchResults() {
-            return this.$store.getters.invoiceSearchResults;
+        paginatedResult() {
+            return this.$store.getters.paginatedResult;
         }
     }
 }

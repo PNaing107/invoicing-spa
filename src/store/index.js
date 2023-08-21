@@ -8,9 +8,14 @@ const store = createStore(
                     error: false,
                     data: []
                 },
-                sortBy: 'Invoice Reference',
+                sortBy: '',
                 filterBy: 'View All',
-                resultsPerPage: 50
+                resultsPerPage: 'All',
+                paginationState: {
+                    pageCount: 1,
+                    currentPage: 1,
+                    resultCount: 0
+                },
             }
         },
         mutations: {
@@ -22,6 +27,16 @@ const store = createStore(
             },
             updateResultsPerPage(state, {option}) {
                 state.resultsPerPage = option;
+            },
+            incrementPage(state) {
+                if(state.paginationState.currentPage < state.paginationState.pageCount) {
+                    state.paginationState.currentPage++;
+                }
+            },
+            decrementPage(state) {
+                if(state.paginationState.currentPage > 1) {
+                    state.paginationState.currentPage--;
+                }
             },
         },
         actions: {
@@ -56,20 +71,19 @@ const store = createStore(
             unpaidInvoiceCount(state) {
                 return state.invoices.data.filter(invoice => {return invoice.status == 2}).length;
             },
-            invoiceSearchResults(state) {
-                // Filter results
-                let filteredResults;
-
+            filteredResults(state) {
                 if(state.filterBy === 'View All') {
-                    filteredResults = state.invoices.data;
+                    return state.invoices.data;
                 } else {
-                    filteredResults = state.invoices.data.filter((invoice) => {
+                    return state.invoices.data.filter((invoice) => {
                         return invoice.status_name === state.filterBy;
                     });
                 }
+            },
+            sortedResults(state, getters) {
+                const filteredResults = getters.filteredResults;
 
-                // Sort results
-                const sortedResults = (() => {
+                return (() => {
                     switch(state.sortBy) {
                         case 'Invoice Total (ascending)':
                             return filteredResults.sort((a, b) => parseFloat(a.invoice_total) - parseFloat(b.invoice_total));
@@ -83,10 +97,32 @@ const store = createStore(
                             return filteredResults;
                     }
                 })();
+            },
+            paginatedResult(state, getters) {
+                const sortedResults = getters.sortedResults;
 
-                return sortedResults;
-                
-                // TODO: Handle Pagination
+                if(state.resultsPerPage === 'All') {
+                    return sortedResults;
+                } else {
+                    state.paginationState.resultCount = sortedResults.length;
+
+                    // number of pages
+                    const pageCount = Math.ceil(sortedResults.length / state.resultsPerPage);
+                    state.paginationState.pageCount = pageCount;
+
+                    // extracted portion of results
+                    const start = (state.paginationState.currentPage - 1) * state.resultsPerPage;
+                    const end = start + state.resultsPerPage;
+
+                    return sortedResults.slice(start, end);
+                }
+            },
+            paginationStateString(state) {
+                if(state.resultsPerPage === 'All') {
+                    return 'Showing All Results';
+                } else {
+                    return `Showing ${(state.paginationState.currentPage - 1) * state.resultsPerPage + 1} to ${state.paginationState.currentPage * state.resultsPerPage} out of ${state.paginationState.resultCount}`;
+                }
             }
         }
     }

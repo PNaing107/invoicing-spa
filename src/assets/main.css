@@ -6,6 +6,10 @@
   @apply bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 rounded;
 }
 
+.btn-secondary {
+  @apply bg-slate-500 hover:bg-slate-700 text-white font-bold px-4 rounded;
+}
+
 
 /* #app {
   max-width: 1280px;
