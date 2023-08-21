@@ -121,6 +121,9 @@ const store = createStore(
                 if(state.resultsPerPage === 'All') {
                     return 'Showing All Results';
                 } else {
+                    if(state.paginationState.currentPage === state.paginationState.pageCount) {
+                        return `Showing ${(state.paginationState.currentPage - 1) * state.resultsPerPage + 1} to ${state.paginationState.resultCount} out of ${state.paginationState.resultCount}`;
+                    }
                     return `Showing ${(state.paginationState.currentPage - 1) * state.resultsPerPage + 1} to ${state.paginationState.currentPage * state.resultsPerPage} out of ${state.paginationState.resultCount}`;
                 }
             }
