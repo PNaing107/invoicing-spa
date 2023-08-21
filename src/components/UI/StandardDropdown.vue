@@ -28,8 +28,8 @@
                           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                           href="#"
                           role="menuitem"
-                          value="option"
-                          @click="$emit('dropdownSelection',title,option)"
+                          :value="option"
+                          @click="selectionHandler(title, option)"
                         >
                         {{ option }}
                         </a>
@@ -49,7 +49,19 @@
         methods: {
             toggleMenuItems() {
                 this.toggleButtonState = ! this.toggleButtonState;
-            }
+            },
+        selectionHandler(title, option) {
+            // handover logic to the store
+            const payload = {
+                group: title,
+                option: option
+            };
+
+            this.$store.dispatch('selectionHandler', payload);
+
+            // hide the dropdown
+            this.toggleMenuItems();
+        }
         }
     }
 </script>

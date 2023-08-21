@@ -24,10 +24,9 @@ export default {
         StandardDropdown,
         StandardButton
     },
-    // props: ['unpaid'],
     data() {
         return {
-            sortByOptions: ['Invoice Reference', 'Invoice Total', 'Date Created', 'Date Due'],
+            sortByOptions: ['Invoice Total (ascending)', 'Invoice Total (descending)', 'Date Due (ascending)', 'Date Due (descending)'],
             filterByOptions: ['Paid', 'Pending', 'Cancelled', 'Overdue', 'View All'],
             paginationOptions: [5,10,20,50]
         }

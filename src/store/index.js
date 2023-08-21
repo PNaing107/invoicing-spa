@@ -13,6 +13,17 @@ const store = createStore(
                 resultsPerPage: 50
             }
         },
+        mutations: {
+            updateSortBy(state, {option}) {
+                state.sortBy = option;
+            },
+            updateFilterBy(state, {option}) {
+                state.filterBy = option;
+            },
+            updateResultsPerPage(state, {option}) {
+                state.resultsPerPage = option;
+            },
+        },
         actions: {
             fetchInvoices(context) {
                 fetch('https://invoicing-api.dev.io-academy.uk/invoices')
@@ -24,6 +35,21 @@ const store = createStore(
                   context.state.invoices.error = true;
                   context.state.invoices.data = err;
                 })
+            },
+            selectionHandler(context, {group, option}) {
+                switch(group) {
+                    case 'Sort By':
+                        context.commit('updateSortBy', {option: option});
+                        break;
+                    case 'Filter By Status':
+                        context.commit('updateFilterBy',  {option: option});
+                        break;
+                    case 'Results per Page':
+                        context.commit('updateResultsPerPage',  {option: option});
+                        break;
+                    default:
+                        console.log('Error: Unknown selection (store.selectionHandler)');
+                }
             }
         },
         getters: {
@@ -31,8 +57,36 @@ const store = createStore(
                 return state.invoices.data.filter(invoice => {return invoice.status == 2}).length;
             },
             invoiceSearchResults(state) {
-                return state.invoices.data;
-                // TODO: Handle Filtering, Pagination and Sorting
+                // Filter results
+                let filteredResults;
+
+                if(state.filterBy === 'View All') {
+                    filteredResults = state.invoices.data;
+                } else {
+                    filteredResults = state.invoices.data.filter((invoice) => {
+                        return invoice.status_name === state.filterBy;
+                    });
+                }
+
+                // Sort results
+                const sortedResults = (() => {
+                    switch(state.sortBy) {
+                        case 'Invoice Total (ascending)':
+                            return filteredResults.sort((a, b) => parseFloat(a.invoice_total) - parseFloat(b.invoice_total));
+                        case 'Invoice Total (descending)':
+                            return filteredResults.sort((a, b) => parseFloat(b.invoice_total) - parseFloat(a.invoice_total));
+                        case 'Date Due (ascending)':
+                            return filteredResults.sort((a, b) => new Date(a.due) - new Date(b.due));
+                        case 'Date Due (descending)':
+                            return filteredResults.sort((a, b) => new Date(b.due) - new Date(a.due));
+                        default:
+                            return filteredResults;
+                    }
+                })();
+
+                return sortedResults;
+                
+                // TODO: Handle Pagination
             }
         }
     }
