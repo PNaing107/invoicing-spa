@@ -1,7 +1,7 @@
 <template>
     <div v-if="this.$store.state.invoices.error">The following error has occurred when trying to fetch the invoices:\n {{ invoices.data }}</div>
     <div v-else-if="! paginatedResult.length" class="text-center">There are no results.</div>
-    <div v-else v-for="invoice in paginatedResult" :key="invoice.id" class="flex justify-between border-2 rounded-md mx-8 my-4 px-1">
+    <div v-else v-for="invoice in paginatedResult" :key="invoice.id" class="flex justify-between border-2 rounded-md mx-8 my-4 px-1" @click="showModal">
         <div class="flex justify-between items-center space-x-4">
             <p class="font-bold">#{{ invoice.invoice_id }}</p>
             <p>Due {{ formatDate(invoice.due) }}</p>
@@ -15,19 +15,44 @@
         </svg>
         </div>
     </div>
+    <Modal v-show="isModalVisable" @close="closeModal">
+            <template v-slot:header>
+                This is a new modal header.
+            </template>
+
+            <template v-slot:body>
+                This is a new modal body.
+            </template>
+
+            <template v-slot:footer>
+                This is a new modal footer.
+            </template>
+    </Modal>
 </template>
 
 <script>
 import StatusIcon from './StatusIcon.vue';
+import Modal from '../UI/Modal.vue';
 
 export default {
-    components: { StatusIcon},
-    // props: ['invoices'],
+    components: { StatusIcon, Modal },
+    data() {
+        return {
+            isModalVisable: false,
+        }
+    },
     methods: {
         formatDate(dateString) {
             const date = new Date(dateString);
             const options = { day: "2-digit", month: "long", year: "numeric" };
             return date.toLocaleDateString("en-US", options);  
+        },
+        showModal() {
+            this.isModalVisable = true;
+        },
+        closeModal() {
+            console.log('close');
+            this.isModalVisable = false;
         }
     },
     computed: {
