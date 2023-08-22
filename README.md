@@ -1,34 +1,41 @@
-# invoicing-spa
+# Mock Invoicing SPA
 
-This template should help get you started developing with Vue 3 in Vite.
+## 1. About
+Rebuilding a previous [project](https://github.com/iO-Academy/2022-aug-react-invoice-app) in Vue 3 using the Options API to practice Frontend Web Development and learn about the Vue.js framework.
 
-## Recommended IDE Setup
+### Technologies
++ [Vue.js](https://vuejs.org/)
++ [Vuex (global state management)](https://vuex.vuejs.org/)
++ [Tailwind CSS](https://tailwindcss.com/)
++ [Cypress (E2E Testing)](https://www.cypress.io/)
+
+## 2. Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-## Customize configuration
+## 3. Customize configuration
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-## Project Setup
+## 4. Local Project Setup
+ Clone this repository using the following command in your shell terminal.
 
+```
+git clone https://github.com/iO-Academy/2022-aug-react-invoice-app.git](https://github.com/PNaing107/invoicing-spa.git
+```
+ Once cloned, go into this directory and install the required node packages using the following command:
+ 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+To start the Vue compiler and Hot-Reload for Development run the following command and navigate to the local url generated to view the Vue App
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
+To run the linter with [ESLint](https://eslint.org/) :
 
 ```sh
 npm run lint
